@@ -19,10 +19,11 @@ public class Main {
         
         // for each -> calcolare housing complessivo = 36
         
-        Pet[] guests = { new Dog(3), new Cat(5), new Dog(1) };
+        Pet[] guests = { new Dog(3), new Cat(5), new Dog(1), new BigDog(1), new BigCat(2)};
         
         int total = 0;
         for(Pet guest: guests) {
+        	System.out.println(guest.getClass());
             total += guest.housing();
         }
         

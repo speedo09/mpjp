@@ -13,7 +13,6 @@ class S03Test {
 
         assertThat(actual, is("positive"));
     }
-
     @Test
     void checkSignNegative() {
         String actual = S03.checkSign(-42);

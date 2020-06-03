@@ -9,8 +9,7 @@ public class S02 {
      * @return speed in meters per second
      */
     public static double speed(double distance, double time) {
-        // TODO
-        return 0;
+        return distance/time;
     }
 
     /**
@@ -23,8 +22,8 @@ public class S02 {
      * @return distance
      */
     public static double distance(int x0, int y0, int x1, int y1) {
-        // TODO
-        return 0;
+        double z = (x0-x1)*(x0-x1)+(y0-y1)*(y0-y1);
+        return Math.sqrt(z);
     }
 
     /**
@@ -36,8 +35,8 @@ public class S02 {
      * @return the engine capacity in cm^3
      */
     public static double engineCapacity(double bore, double stroke, int nr) {
-        // TODO
-        return 0;
+       double sing = (bore/2)*(bore/2)*Math.PI*stroke;
+        return (sing/1000)*nr;
     }
 
     /**
@@ -47,8 +46,13 @@ public class S02 {
      * @return sum of digits
      */
     public static int digitSum(int value) {
-        // TODO
-        return 0;
+    	int val = 0;
+    	value = Math.abs(value);
+        while(value!=0) {
+        	val =val+ value%10;
+        	value = value/10;
+        }
+       return val;
     }
 
     /**
