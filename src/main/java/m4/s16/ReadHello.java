@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public class ReadHello {
     public static void main(String[] args) {
-        File f = new File("/tmp/hello.txt");
+        File f = new File("C:/Users/anton/git/mpjp/hello.txt");
 
-        BufferedReader br;
+        BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(f));
             String line = br.readLine();

@@ -8,8 +8,8 @@ public class Adder {
         double result = 0;
 
         Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNext()) {
-            if (scanner.hasNextDouble()) {
+        while (scanner.hasNext()) { //finche c'è qualcosa da leggere	
+            if (scanner.hasNextDouble()) { // è un double?
                 result += scanner.nextDouble();
             } else {
                 System.out.println("Bad input, discarded: " + scanner.next());
