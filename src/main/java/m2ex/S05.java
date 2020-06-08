@@ -74,12 +74,16 @@ public class S05 {
         // [1][0][0][0][1]
         // 43_210
         // 2
+    	if(s == null || s.isEmpty()) {
+    		return 0;
+    	}
         int res = 0;
-
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '1') {
-                res += Math.pow(2, i);
+        int exp = 0;
+        for (int i= s.length()-1; i>=0; i--) {
+        	if (s.charAt(i) == '1') {
+                res += Math.pow(2, exp);
             }
+            exp++;
         }
 
         return res;
@@ -126,7 +130,6 @@ public class S05 {
      */
     public static int max(int[] data) {
         int max = data[0];
-
         for (int i = 0; i < data.length; i++) {
             if (data[i] > max)
                 max = data[i];
