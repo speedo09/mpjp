@@ -72,7 +72,7 @@ class MyIntQueue {
     }
 
     public void add(int value) {
-    Node node = new Node(value);
+    // Node node = new Node(value);
     // head = node;
     }
 
