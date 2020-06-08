@@ -1,4 +1,4 @@
-package m5.s10;
+ package m5.s10;
 
 /**
  * TODO:
@@ -64,14 +64,16 @@ class MyIntQueueException extends Exception {
 }
 
 class MyIntQueue {
-    // TODO instance variables?
+    Node head;
 
     public MyIntQueue() {
+    	this.head = null;
         // TODO
     }
 
     public void add(int value) {
-        // TODO
+    Node node = new Node(value);
+    // head = node;
     }
 
     public int remove() throws MyIntQueueException {

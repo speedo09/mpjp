@@ -28,7 +28,7 @@ public class Exercise {
 
 class MyIntStack {
     // TODO: instance variables
-
+Node head;
     void push(int value) {
         // TODO
     }

@@ -18,3 +18,12 @@ public class AsSortedSet {
     }
 
 }
+/* [3 45 11] -> [3 11 45] 
+   *  3        struttura ad albero a tre livelli..non li voglio troppi
+   *    45
+   *  18 
+   * allora e ruoto faccio due livelli
+   *     18
+   *   3   45
+   *   1
+*/
