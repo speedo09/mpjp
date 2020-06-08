@@ -1,9 +1,11 @@
 package m2ex;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class SinkThem {
-    static public final char SHIP = 'S';
+	static public final char SHIP = 'S';
     static public final char WRECK = 'W';
     static public final char MISS = 'M';
     static public final char EMPTY = '_';
@@ -25,8 +27,13 @@ public class SinkThem {
      * @param dimension board size
      */
     public SinkThem(int dimension) {
-        // TODO
-        board = new char[0][0];
+        board = new char[dimension][dimension];
+
+        for (int i = 0; i < board.length; i++) {
+        	for (int j = 0; j < board.length; j++) {
+        		board[i][j] = EMPTY;
+        	}
+        }
     }
 
     /**
@@ -62,8 +69,29 @@ public class SinkThem {
      * @return a string
      */
     public String getBoard() {
-        // TODO
-        return "* * *\n* * *\n* * *\n";
+        StringBuilder boardRep = new StringBuilder();
+
+        for (int i = 0; i < getBoardSize(); i++) {
+        	for (int j = 0; j < getBoardSize(); j++) {
+        		char cell = board[i][j];
+        		if (cell == MISS || cell == WRECK) {
+        			boardRep.append(cell);
+        		} else {
+        			boardRep.append(UNKNOWN);
+        		}
+        		boardRep.append("\t");
+        	}
+        	boardRep.append("\n");
+        }
+        return boardRep.toString();
+    }
+
+    private boolean isRightCoordinate (int row, int col) {
+    	if ((row >= 0 && row < getBoardSize()) && (col >= 0 && col < getBoardSize())) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     /**
@@ -74,8 +102,17 @@ public class SinkThem {
      * @return false if it can't be placed
      */
     public boolean place(int row, int col) {
-        // TODO
-        return false;
+        if (!isRightCoordinate(row, col)) {
+        	return false;
+        } 
+
+        if (board[row][col] == EMPTY) {
+        	board[row][col] = SHIP;
+        	counter++;
+        	return true;
+        } else {
+        	return false;
+        }
     }
 
     /**
@@ -88,8 +125,23 @@ public class SinkThem {
      * @return true for a sink
      */
     public boolean shoot(int row, int col) {
-        // TODO
-        return false;
+    	if (!isRightCoordinate(row, col)) {
+    		System.out.println("Coordinate non valide!");
+    		return false;
+    	} 
+
+    	if (board[row][col] == SHIP) {
+    		board[row][col] = WRECK;
+    		points += POINTS_FOR_SINK;
+    		counter--;
+    		System.out.println("COLPITO!");
+    		return true;
+    	} else {
+    		board[row][col] = MISS;
+    		points -= POINTS_FOR_MISS;
+    		System.out.println("Mancato!");
+    		return false;
+    	}
     }
 
     @Override
@@ -120,19 +172,48 @@ public class SinkThem {
     }
 
     public static void main(String[] args) {
-        // TODO: use Scanner for user interaction
+        int size = 0;
 
-        // TODO: let the player choose for a (sensible) board size
-        SinkThem st = new SinkThem(10);
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Inserisci una dimensione per la board: ");
 
-        // TODO: place the ships randomly instead
-        st.place(0, 2);
-        st.place(1, 1);
-        st.place(2, 0);
+        if (scan.hasNextInt()) {
+        	size = scan.nextInt();
+        } else {
+        	scan.next();
+        }
 
-        // TODO: use Scanner instead
-        shootAll(st);
 
+        SinkThem st = new SinkThem(size);
+        Random random = new Random();
+
+        int shipsNumber = random.nextInt((size*size-1) + 1);
+        System.out.println("Ho creato " + shipsNumber + " navi.");
+
+        for (int i = 0; i < shipsNumber; i++) {
+        	@SuppressWarnings("unused")
+			boolean flag = st.place(random.nextInt(size), random.nextInt(size));
+        }
+
+        while(!st.done()) {
+        	System.out.println("SPARA! (riga, colonna)");
+
+        	if (scan.hasNext()) {
+            	String s = scan.next();
+            	String split[] = s.split(",");
+            	int i, j;
+            	try {
+					i = Integer.parseInt(split[0]);
+					j = Integer.parseInt(split[1]);
+				} catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+					System.out.println("Formato non accettabile");
+					continue;
+				}
+            	st.shoot(i, j);
+            }
+        }
+
+        scan.close();
         System.out.println(st);
         System.out.println("You scored " + st.getPoints());
     }

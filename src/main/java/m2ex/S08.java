@@ -1,5 +1,10 @@
 package m2ex;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 public class S08 {
 	/**
 	 * Binary addition on strings
@@ -15,7 +20,48 @@ public class S08 {
 	 * @throws IllegalArgumentException different sizes
 	 */
 	public static String binarySum(String left, String right) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(left.length() != right.length())
+			throw new IllegalArgumentException("left and right have different sizes");
+
+		String res = "";
+		boolean resto = false;
+
+		for(int i = left.length()-1; i >= 0; i--) {
+			if(left.charAt(i) == '0' && right.charAt(i) == '0') {
+				if(!resto) {
+					res += "0";
+				}else {
+					res += "1";
+				}
+				resto = false;
+			}else if(left.charAt(i) == '1' && right.charAt(i) == '1') {
+				if(!resto) {
+					res += "0";
+					resto = true;
+				}else {
+					res += "11";
+					resto = false;
+				}
+
+			}else { //0 1 o 1 0
+				//((left.charAt(i) == '1' && right.charAt(i) == '0') || 
+				//(left.charAt(i) == '0' && right.charAt(i) == '0'))
+				if(!resto) {
+					res += "1";
+				}else {
+					res += "01";
+				}
+				resto = false;
+			}
+
+		}
+
+		if(resto)
+			res += "1";
+
+		res = S05.reverse(res);
+
+		return res;
 	}
 
 	/**
@@ -31,7 +77,42 @@ public class S08 {
 	 * @return a merge of the two input parameters
 	 */
 	public static int[] mergeSorted(int[] left, int[] right) {
-		throw new UnsupportedOperationException("Not yet implemented");
+//		throw new UnsupportedOperationException("Not yet implemented");
+		int[] res = new int[left.length + right.length];
+		int i = 0, j = 0, k = 0;
+
+		while(i < left.length && j < right.length) {
+			if(left[i] < right[j]) {
+				res[k] = left[i];
+				i++;
+				k++;
+			}else if(right[j] < left[i]) {
+				res[k] = right[j];
+				j++;
+				k++;
+			}else { //==
+				res[k] = left[i];
+				res[k+1] = right[j];
+				i++;
+				j++;
+				k += 2;
+			}
+		}
+
+		while(i < left.length) {
+			res[i+j] = left[i];
+			i++;
+		}
+		while(j < right.length) {
+			res[i+j] = right[j];
+			j++;
+		}
+
+		for(int z = 0; z < res.length; z++) {
+			System.out.print(res[z]);
+		}
+
+		return res;
 	}
 
 	/**
@@ -46,7 +127,20 @@ public class S08 {
 	 * @return the only single value
 	 */
 	public static int getSingle(int[] values) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		int count[] = new int[9];
+		int res = -1;
+
+		for(int i = 0; i < values.length; i++) {
+			count[values[i]]++; //conto occorrenze dei numeri da 1 a 9 presenti in values
+		}
+
+		for(int i = 0; i < count.length; i++) {
+			if(count[i] == 1) {
+				res = i;
+			}
+		}
+
+		return res;
 	}
 
 	/**
@@ -61,7 +155,17 @@ public class S08 {
 	 * @return true if no duplicates in
 	 */
 	public static boolean hasOnlyUnique(String s) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		Set<Character> chars = new HashSet<Character>();
+		boolean res = false;
+
+		for(int i = 0; i < s.length(); i++) {
+			chars.add(s.charAt(i));
+		}
+
+		if(chars.size() == s.length())
+			res = true;			
+
+		return res;
 	}
 
 	/**
@@ -72,6 +176,32 @@ public class S08 {
 	 * @return true if s is an anagram of t
 	 */
 	public static boolean isAnagram(String s, String t) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(s.length() != t.length()) {
+			throw new UnsupportedOperationException("Different lengths");
+		}
+		boolean res = false;
+
+		Map<Character, Integer> charsS = new TreeMap<Character, Integer>();
+		Map<Character, Integer> charsT = new TreeMap<Character, Integer>();
+		for(int i = 0; i < s.length(); i++) {
+			if(charsS.containsKey(s.charAt(i))) {
+				charsS.put(s.charAt(i), charsS.get(s.charAt(i))+1);
+			}else {
+				charsS.put(s.charAt(i), 1);
+			}
+		}
+
+		for(int i = 0; i < t.length(); i++) {
+			if(charsT.containsKey(t.charAt(i))) {
+				charsT.put(t.charAt(i), charsT.get(t.charAt(i))+1);
+			}else {
+				charsT.put(t.charAt(i), 1);
+			}
+		}
+
+		if(charsS.equals(charsT))
+			res = true;
+
+		return res;
 	}
 }
