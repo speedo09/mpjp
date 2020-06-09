@@ -30,11 +30,13 @@ public class S08 {
 			if(left.charAt(i) == '0' && right.charAt(i) == '0') {
 				if(!resto) {
 					res += "0";
-				}else {
+				}
+				else {
 					res += "1";
 				}
 				resto = false;
-			}else if(left.charAt(i) == '1' && right.charAt(i) == '1') {
+			}
+			else if(left.charAt(i) == '1' && right.charAt(i) == '1') {
 				if(!resto) {
 					res += "0";
 					resto = true;
@@ -45,7 +47,7 @@ public class S08 {
 
 			}else { //0 1 o 1 0
 				//((left.charAt(i) == '1' && right.charAt(i) == '0') || 
-				//(left.charAt(i) == '0' && right.charAt(i) == '0'))
+				//(left.charAt(i) == '0' && right.charAt(i) == '1'))
 				if(!resto) {
 					res += "1";
 				}else {
@@ -204,4 +206,10 @@ public class S08 {
 
 		return res;
 	}
+	 public class main{
+		 String m = "ciao";
+		 String n ="caio";
+		 boolean c = S08.isAnagram (m,n);
+		 
+	 }
 }
